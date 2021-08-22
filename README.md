@@ -30,4 +30,4 @@ mvn test
 ## Derechos de Autor
 **©** _Juan Camilo Posso G., Escuela Colombiana de Ingeniería Julio Garavito._
 ## Licencia
-Licencia bajo  [GNU General Public License](https://github.com/JCPosso/AREP-Laboratorio-1/blob/master/LICENSE.txt).
+Licencia bajo  [GNU General Public License](https://github.com/JCPosso/AREP-Laboratorio-1/blob/master/LICENSE).
