@@ -4,6 +4,7 @@ window.onload=function(){
         e.preventDefault();
         const formData= new FormData(e.currentTarget)
         traerAlpha(formData).then (data=>{
+            console.log($("#sl-menu-series option:selected").text());
             pegarInfo(data[$("#sl-menu-series option:selected").text()])
         })
     });
