@@ -35,10 +35,12 @@ public class App
 
     private static String  facadeAlpha(Request req,  Response res){
         String stock = req.queryParams("st");
+        String time = req.queryParams("se");
         String response ="None";
         HttpStockService stockService = CurrentServiceInstance.getInstance().getServiceAlpha();
-        if (stock!=null && stock!=""){
+        if ( (stock!=null && stock!="") && (time!=null && time!="")){
             stockService.setStock(stock);
+            stockService.setPeriod(time);
         }
         try {
             response=stockService.TimeSeriesDaily();

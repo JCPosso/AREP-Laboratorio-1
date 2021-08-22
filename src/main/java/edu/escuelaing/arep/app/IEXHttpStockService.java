@@ -13,4 +13,9 @@ public class IEXHttpStockService extends HttpStockService{
     public String getStock() {
         return null;
     }
+
+    @Override
+    public void setPeriod(String time) {
+
+    }
 }

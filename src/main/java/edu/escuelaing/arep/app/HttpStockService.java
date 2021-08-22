@@ -46,5 +46,5 @@ public abstract class HttpStockService {
     public abstract String getURL();
     public abstract void setStock(String stock);
     public abstract String getStock();
-
+    public abstract void setPeriod(String time);
 }
