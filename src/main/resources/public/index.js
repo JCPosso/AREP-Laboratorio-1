@@ -3,7 +3,9 @@ window.onload=function(){
     mb.addEventListener("submit", (e)=>{
         e.preventDefault();
         const formData= new FormData(e.currentTarget)
-        traerAlpha(formData).then (data=>{data})
+        traerAlpha(formData).then (data=>{
+            pegarInfo(data[$("#sl-menu-series option:selected").text()]
+        })
     });
 };
 function pegarInfo(obj){
@@ -26,6 +28,5 @@ async function traerAlpha(formData){
     console.log(symbol+"  "+fun);
     const response = await fetch("https://heroku-app-arep.herokuapp.com/facadealpha?se="+fun+"&st="+symbol)
     const data = await response.json()
-    console.log(data)
-    return pegarInfo(data[$("#sl-menu-series option:selected").text()])
+    return data
 };
