@@ -1,16 +1,19 @@
-package edu.escuelaing.arep.app;
+package edu.escuelaing.arep.app.testClient;
+
 import spark.Request;
 import spark.Response;
 
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import static spark.Spark.*;
+
 /**
  * Hello world!
  *
  */
-public class App 
+public class AppTest
 {
     public static void main(String[] args) {
         port(getPort());
@@ -38,12 +41,14 @@ public class App
         String time = req.queryParams("se");
         String response ="None";
         HttpStockService stockService = CurrentServiceInstance.getInstance().getServiceAlpha();
-        if (stock!=null && stock!="") stockService.setStock(stock);
-        if (time!=null && time!="")   stockService.setPeriod(time);
+        if ( (stock!=null && stock!="") && (time!=null && time!="")){
+            stockService.setStock(stock);
+            stockService.setPeriod(time);
+        }
         try {
-            response=stockService.TimeSeries();
+            response=stockService.TimeSeriesDaily();
         } catch (IOException e) {
-            Logger.getLogger(App.class.getName()).log( Level.SEVERE,null,e);
+            Logger.getLogger(AppTest.class.getName()).log( Level.SEVERE,null,e);
         }
         return response;
     }
@@ -55,9 +60,9 @@ public class App
             stockService.setStock(stock);
         }
         try {
-            response=stockService.TimeSeries();
+            response=stockService.TimeSeriesDaily();
         } catch (IOException e) {
-            Logger.getLogger(App.class.getName()).log( Level.SEVERE,null,e);
+            Logger.getLogger(AppTest.class.getName()).log( Level.SEVERE,null,e);
         }
         return response;
     }

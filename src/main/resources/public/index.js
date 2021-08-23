@@ -27,6 +27,7 @@ async function traerAlpha(formData){
     const symbol = formData.get("data-exchange");
     const fun = formData.get("sl-menu-series");
     console.log(symbol+"  "+fun);
+    //"https://www.alphavantage.co/query?function="+fun+"&symbol="+symbol+"&apikey=Q1QZFVJQ21K7C6XM"
     const response = await fetch("https://heroku-app-arep.herokuapp.com/facadealpha?se="+fun+"&st="+symbol)
     const data = await response.json()
     return data
