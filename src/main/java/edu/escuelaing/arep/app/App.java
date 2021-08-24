@@ -1,26 +1,25 @@
 package edu.escuelaing.arep.app;
 import spark.Request;
 import spark.Response;
-
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import static spark.Spark.*;
+
 /**
- * Hello world!
- *
+ *Spark-web REST API Facade
+ * @autor  Juan c. Posso
+ * @version 8/24/2021/2
  */
 public class App 
 {
-    private static ArrayList<String> logs;
     public static void main(String[] args) {
         port(getPort());
         staticFiles.location( "/public" );
-        HashMap<String,String> cache = new HashMap<String,String>();
-        get("/facadealpha", "application/json", (req, res) -> facadeAlpha(req,res,cache));
-        get("/facadeiex", "application/json", (req, res) -> facadeIEX(req,res,cache));
+
+        get("/facadealpha", "application/json", (req, res) -> facadeAlpha(req,res));
+        get("/facadeiex", "application/json", (req, res) -> facadeIEX(req,res));
     }
 
     /**
@@ -36,52 +35,49 @@ public class App
         }
         return 4567; //returns default port if heroku-port isn't set (i.e. on localhost)
     }
-
-    private static String  facadeAlpha(Request req,  Response res,HashMap cache){
+    /**
+    * This method create a new URL to the AlphaHttpStockService, create a new connection http ,
+     * and return response from the external API
+     * @param req web client request
+     * @param res web server response
+    * @return an html response with the info from the web client
+    */
+    private static String  facadeAlpha(Request req,  Response res){
         String stock = req.queryParams("st");
         String time = req.queryParams("se");
         String key = stock+":"+time;
         String response ="None";
         HttpStockService stockService = CurrentServiceInstance.getInstance().getServiceAlpha();
-        if (!cache.containsKey( key )){
-            if ( (stock!=null && stock!="") &&(time!=null && time!="")) {
-                stockService.setStock(stock);
-                stockService.setPeriod(time);
-            }
-            try {
-                response=stockService.TimeSeries();
-                cache.put(key,response);
-            } catch (IOException e) {
-                Logger.getLogger(App.class.getName()).log( Level.SEVERE,null,e);
-            }
+        if ( (stock!=null && stock!="") &&(time!=null && time!="")) {
+            stockService.setStock(stock);
+            stockService.setPeriod(time);
         }
-        response = cache.get(key).toString();
+        try {
+            response=stockService.TimeSeries();
+        } catch (IOException e) {
+            Logger.getLogger(App.class.getName()).log( Level.SEVERE,null,e);
+        }
         return response;
     }
-    private static String  facadeIEX(Request req, Response res, HashMap cache){
+    /**
+     * This method create a new URL to the IEXHttpStockService, create a new connection http ,
+     * and return response from the external API
+     * @param req web client request
+     * @param res web server response
+     * @return an html response with the info from the web client
+     */
+    private static String  facadeIEX(Request req, Response res){
         String stock = req.queryParams("st");
         String response ="None";
         HttpStockService stockService = CurrentServiceInstance.getInstance().getServiceIEX();
-        if (!cache.containsKey( stock )) {
-            if ( stock != null && stock != "" ) {
+        if ( stock != null && stock != "" ) {
                 stockService.setStock( stock );
             }
-            try {
+        try {
                 response = stockService.TimeSeries();
-                cache.put(stock,response);
-            } catch (IOException e) {
+        } catch (IOException e) {
                 Logger.getLogger( App.class.getName() ).log( Level.SEVERE, null, e );
-            }
         }
-        response = cache.get(stock).toString();
         return response;
-    }
-
-    public static ArrayList<String> getLogs() {
-        return logs;
-    }
-
-    public void setLogs(ArrayList<String> logs) {
-        this.logs = logs;
     }
 }

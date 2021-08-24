@@ -14,11 +14,6 @@ public class AlphaHttpStockService extends HttpStockService{
     }
 
     @Override
-    public String getStock() {
-        return stock;
-    }
-
-    @Override
     public void setPeriod(String time) {
         this.fun= time;
     }

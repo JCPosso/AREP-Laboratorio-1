@@ -7,7 +7,7 @@ public class CurrentServiceInstance {
     private CurrentServiceInstance(){
 
         serviceAlpha = new AlphaHttpStockService();
-        serviceIEX = new AlphaHttpStockService();
+        serviceIEX = new IEXHttpStockService();
     }
 
     public static CurrentServiceInstance getInstance(){
