@@ -3,6 +3,8 @@ import spark.Request;
 import spark.Response;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import static spark.Spark.*;
@@ -12,11 +14,13 @@ import static spark.Spark.*;
  */
 public class App 
 {
+    private static ArrayList<String> logs;
     public static void main(String[] args) {
         port(getPort());
         staticFiles.location( "/public" );
-        get("/facadealpha", "application/json", (req, res) -> facadeAlpha(req,res));
-        get("/facadeiex", "application/json", (req, res) -> facadeIEX(req,res));
+        HashMap<String,String> cache = new HashMap<String,String>();
+        get("/facadealpha", "application/json", (req, res) -> facadeAlpha(req,res,cache));
+        get("/facadeiex", "application/json", (req, res) -> facadeIEX(req,res,cache));
     }
 
     /**
@@ -33,32 +37,51 @@ public class App
         return 4567; //returns default port if heroku-port isn't set (i.e. on localhost)
     }
 
-    private static String  facadeAlpha(Request req,  Response res){
+    private static String  facadeAlpha(Request req,  Response res,HashMap cache){
         String stock = req.queryParams("st");
         String time = req.queryParams("se");
+        String key = stock+":"+time;
         String response ="None";
         HttpStockService stockService = CurrentServiceInstance.getInstance().getServiceAlpha();
-        if (stock!=null && stock!="") stockService.setStock(stock);
-        if (time!=null && time!="")   stockService.setPeriod(time);
-        try {
-            response=stockService.TimeSeries();
-        } catch (IOException e) {
-            Logger.getLogger(App.class.getName()).log( Level.SEVERE,null,e);
+        if (!cache.containsKey( key )){
+            if ( (stock!=null && stock!="") &&(time!=null && time!="")) {
+                stockService.setStock(stock);
+                stockService.setPeriod(time);
+            }
+            try {
+                response=stockService.TimeSeries();
+                cache.put(key,response);
+            } catch (IOException e) {
+                Logger.getLogger(App.class.getName()).log( Level.SEVERE,null,e);
+            }
         }
+        response = cache.get(key).toString();
         return response;
     }
-    private static String  facadeIEX(Request req,  Response res){
+    private static String  facadeIEX(Request req, Response res, HashMap cache){
         String stock = req.queryParams("st");
         String response ="None";
         HttpStockService stockService = CurrentServiceInstance.getInstance().getServiceIEX();
-        if (stock!=null && stock!=""){
-            stockService.setStock(stock);
+        if (!cache.containsKey( stock )) {
+            if ( stock != null && stock != "" ) {
+                stockService.setStock( stock );
+            }
+            try {
+                response = stockService.TimeSeries();
+                cache.put(stock,response);
+            } catch (IOException e) {
+                Logger.getLogger( App.class.getName() ).log( Level.SEVERE, null, e );
+            }
         }
-        try {
-            response=stockService.TimeSeries();
-        } catch (IOException e) {
-            Logger.getLogger(App.class.getName()).log( Level.SEVERE,null,e);
-        }
+        response = cache.get(stock).toString();
         return response;
+    }
+
+    public static ArrayList<String> getLogs() {
+        return logs;
+    }
+
+    public void setLogs(ArrayList<String> logs) {
+        this.logs = logs;
     }
 }

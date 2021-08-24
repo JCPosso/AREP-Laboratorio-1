@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 
 public abstract class HttpStockService {
 
@@ -12,34 +13,39 @@ public abstract class HttpStockService {
     private static  final String GET_URL = "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=fb&apikey=Q1QZFVJQ21K7C6XM";
 
     public  String TimeSeries() throws IOException {
-        String str="None";
+        String str = "None";
         URL obj = new URL(getURL());
-        HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-        con.setRequestMethod("GET");
-        con.setRequestProperty("User-Agent", USER_AGENT);
+        //System.out.println(logs);
+        //if (!(logs.contains(getURL()))) {
+            //logs.add(getURL());
+            //System.out.println(logs);
+            HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+            con.setRequestMethod( "GET" );
+            con.setRequestProperty( "User-Agent", USER_AGENT );
 
-        //The following invocation perform the connection implicitly before getting the code
-        int responseCode = con.getResponseCode();
-        System.out.println("GET Response Code :: " + responseCode);
+            //The following invocation perform the connection implicitly before getting the code
+            int responseCode = con.getResponseCode();
+            System.out.println( "GET Response Code :: " + responseCode );
 
-        if (responseCode == HttpURLConnection.HTTP_OK) { // success
-            BufferedReader in = new BufferedReader(new InputStreamReader(
-                    con.getInputStream()));
-            String inputLine;
-            StringBuffer response = new StringBuffer();
+            if ( responseCode == HttpURLConnection.HTTP_OK ) { // success
+                BufferedReader in = new BufferedReader( new InputStreamReader(
+                        con.getInputStream() ) );
+                String inputLine;
+                StringBuffer response = new StringBuffer();
 
-            while ((inputLine = in.readLine()) != null) {
-                response.append(inputLine);
+                while ((inputLine = in.readLine()) != null) {
+                    response.append( inputLine );
+                }
+                in.close();
+
+                // print result
+                str = response.toString();
+                System.out.println( str );
+            } else {
+                System.out.println( "GET request not worked" );
             }
-            in.close();
-
-            // print result
-            str= response.toString();
-            System.out.println(str);
-        } else {
-            System.out.println("GET request not worked");
-        }
-        System.out.println("GET DONE");
+            System.out.println( "GETa DONE" );
+        //}
         return str;
     }
 
