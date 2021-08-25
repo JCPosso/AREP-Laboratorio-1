@@ -1,7 +1,7 @@
 # Introduccion MVN , Git y Heroku
 ## Descripcion
 En el siguiente programa se construirá una aplicación para consultar el mercado de valores de las acciones negociadas en Bolsa.
-La aplicación recibirá el identificador de una acción, por ejemplo “MSFT” para Microsoft  y deberá mostrar el histórico de la valoración intra-día, diaria, semanal y mensual.}
+La aplicación recibirá el identificador de una acción, por ejemplo “MSFT” para Microsoft  y deberá mostrar el histórico de la valoración intra-día, diaria, semanal y mensual.
 ## Prerrequisitos
 Antes de ejecutar el proyecto es necesario instalar los siguientes programas:
 * [Java](https://www.java.com/es/download/ie_manual.jsp). versión 11 o superior. 
@@ -20,11 +20,13 @@ Para ejecutar el proyecto usamos Maven en el directorio raiz del proyecto  usand
 mvn package
 ```
 ## Pruebas
-Ejecutamos con la consola de comandos :
+Para dar arranque a todas las pruebas Ejecutamos con la consola de comandos  :
+```
+mvn test -Dtest=ClientTest
+```
+#Despliegue HEROKU
+[![Heroku](src/main/resources/public/heroku.jpg)](https://heroku-app-arep.herokuapp.com/)
 
-```
-mvn test
-```
 ## Autor
 [Juan Camilo Posso Guevara](https://github.com/JCPosso)
 ## Derechos de Autor
