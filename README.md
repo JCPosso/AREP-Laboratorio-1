@@ -24,7 +24,8 @@ Para dar arranque a todas las pruebas Ejecutamos con la consola de comandos  :
 ```
 mvn test -Dtest=ClientTest
 ```
-#Despliegue HEROKU
+## Despliegue HEROKU
+
 [![Heroku](src/main/resources/public/heroku.jpg)](https://heroku-app-arep.herokuapp.com/)
 
 ## Autor
