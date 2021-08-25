@@ -9,7 +9,7 @@ import static spark.Spark.*;
 
 /**
  *Spark-web REST API Facade
- * @autor  Juan c. Posso
+ * @autor  Juan C. Posso
  * @version 8/24/2021/2
  */
 public class App 

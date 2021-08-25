@@ -1,5 +1,10 @@
 package edu.escuelaing.arep.app;
 
+/**
+ *Iex Http Stock Service has main information to create a connection with the External Iex Cloud API
+ * @autor  Juan C. Posso
+ * @version 8/24/2021/2
+ *  */
 public class IEXHttpStockService extends HttpStockService{
     String stock="aapl";
     @Override

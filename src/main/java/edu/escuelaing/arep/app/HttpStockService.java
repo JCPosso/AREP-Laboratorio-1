@@ -11,12 +11,13 @@ public abstract class HttpStockService {
 
     private static  final String USER_AGENT = "Mozilla/5.0";
     private HashMap<URL, String> cache = new HashMap <URL, String> ();
+
     /**
      * This method create a new connection HTTP  with the external API
+     * this use a hashmap to handle previous queries made to the API
      * @return String   response from the connection
      * @throws IOException if the buffer reader  fail
      */
-
     public  String TimeSeries() throws IOException {
         String str = "None";
         URL obj = new URL(getURL());
@@ -62,12 +63,14 @@ public abstract class HttpStockService {
 
     /**
      * This method set the provided identifier of the stock exchange in the API url
+     * @param stock set stock value in the current service
      * */
     public abstract void setStock(String stock);
 
     /**
      * This method set the the period of time in which you
      * want to make the query, either in days, weeks or per month.
+     * @param time set time frame value on the current url
      * */
     public abstract void setPeriod(String time);
 }

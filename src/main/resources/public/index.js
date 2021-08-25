@@ -22,7 +22,6 @@ function pegarInfo(obj){
                     text += ""
                     document.getElementById("demo").innerHTML = text;
 }
-
 async function traerAlpha(formData){
     const symbol = formData.get("data-exchange");
     const fun = formData.get("sl-menu-series");

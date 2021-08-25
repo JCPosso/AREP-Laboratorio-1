@@ -8,15 +8,18 @@ import java.net.URL;
 import java.util.HashMap;
 
 /**
- * @author Juan c. Posso
- * @version 1.0
+ * This class return all information of the connection with the heroku service
+ *  @autor  Juan C. Posso
+ *  @version 8/24/2021/2
  */
 public class HttpHerokuTest {
     private static HashMap<URL, String> cache = new HashMap <URL, String> ();
     /**
-     * @param nUrl
-     * @return
-     * @throws IOException
+     * This method return all information of the connection with the heroku service
+     * this use a hashmap to handle previous queries made to the API
+     * @param nUrl String url website heroku service
+     * @return String with the content of the website
+     * @throws IOException   handles exceptions thrown by the read buffer
      */
     public static String testHerokuConnection(String nUrl) throws IOException {
         String str= "";

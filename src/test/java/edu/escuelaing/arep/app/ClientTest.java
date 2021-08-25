@@ -8,14 +8,17 @@ import java.io.IOException;
 import static org.junit.Assert.assertTrue;
 
 /**
- * @author Juan C. Posso
- * @version 1.0
+ * This class tests different connections made to the web service deploy in heroku
+ *  @autor  Juan C. Posso
+ *  @version 8/24/2021/2
  */
 public class ClientTest {
 
     /**
-     * @throws IOException
-     * @throws JSONException
+     * This class tests that the results obtained from the Alpha facade
+     * are similar to those obtained from the application displayed in heroku
+     * @throws IOException   handles exceptions thrown by the read buffer
+     * @throws JSONException handles the exceptions generated with the tests made with the json
      */
     @Test
     public void TestAlphaFacadeAndAlphaHerokuAreEquals() throws IOException, JSONException {
@@ -32,8 +35,10 @@ public class ClientTest {
     }
 
     /**
-     * @throws IOException
-     * @throws JSONException
+     * This test checks that when connecting to different
+     * types of stock, the same response is not obtained
+     * @throws IOException   handles exceptions thrown by the read buffer
+     * @throws JSONException handles the exceptions generated with the tests made with the json
      */
     @Test
     public void AlphaTWTRisDifferentToAlphaIBM() throws IOException, JSONException{
@@ -50,8 +55,10 @@ public class ClientTest {
     }
 
     /**
-     * @throws IOException
-     * @throws JSONException
+     * Here it is verified that the requests made to the IEX Cloud services generate
+     * the same response both in the front client and in the heroku
+     * @throws IOException   handles exceptions thrown by the read buffer
+     * @throws JSONException handles the exceptions generated with the tests made with the json
      */
     @Test
     public void TestIEXFacadeAndIEXHerokuAreEquals() throws IOException, JSONException{
